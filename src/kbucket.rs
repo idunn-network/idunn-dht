@@ -124,12 +124,13 @@ impl KBucket {
     }
 
     pub fn walk_list(&mut self){
-        let ref mut node = self.head.clone();
+        let mut node = self.head.clone();
         let mut c = 0;
         while node.is_some() && c < self.tree.len() {
             c = c + 1;
-            println!("{}", node.as_ref().unwrap().borrow().nodeid);
-            *node = node.as_ref().unwrap().borrow().next.clone();
+            let rc = node.unwrap();
+            println!("{}", rc.borrow().nodeid);
+            node = rc.borrow().next.clone();
         }
     }
 }

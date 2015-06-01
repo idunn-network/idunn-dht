@@ -1,6 +1,3 @@
-#![feature(core)]
-#![feature(hash)]
-
 mod nodeid;
 mod kbucket;
 mod util;

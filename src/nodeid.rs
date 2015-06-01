@@ -1,9 +1,7 @@
-#![allow(dead_code)] 
-#![allow(unused_variables)]
+#![allow(dead_code)]
 
 use std::cmp::Ordering;
 use std::fmt;
-use std::num::Int;
 
 use util;
 
@@ -39,7 +37,7 @@ impl NodeId {
         let mut bucket = (NODE_ID_SIZE * 8) - 1;
         for i in (0..NODE_ID_SIZE) {
             let b = (self.0[i] ^ other.0[i]).leading_zeros();
-            bucket -= b;
+            bucket -= b as usize;
             if b < 8 { break; }
         }
         return bucket;
