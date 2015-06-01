@@ -1,5 +1,5 @@
 //this is warning is seriously annoying while trying to develop code
-#![allow(dead_code)] 
+#![allow(dead_code)]
 #![allow(unused_variables)]
 
 
@@ -18,7 +18,7 @@ pub struct NodeInfo {
     prev: Option<Rc<RefCell<NodeInfo>>>,
     next: Option<Rc<RefCell<NodeInfo>>>,
     location: String,
-}        
+}
 
 impl fmt::Debug for NodeInfo {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -42,7 +42,7 @@ impl fmt::Display for KBucket{
 }
 
 impl KBucket {
-    pub fn new() -> KBucket{ 
+    pub fn new() -> KBucket{
         KBucket{
             head: Option::None,
             tail: Option::None,
@@ -53,19 +53,19 @@ impl KBucket {
     //always appends to end of linked list
     pub fn kbinsert(&mut self, node: NodeId, loc: String) {
         if self.tail.is_none() {
-                let ninfo = NodeInfo{nodeid: node.clone(), 
+                let ninfo = NodeInfo{nodeid: node.clone(),
                     prev: Option::None, next: Option::None, location: loc};
                 let ninforc = Rc::new(RefCell::new(ninfo));
                 self.head = Option::Some(ninforc.clone());
                 self.tail = Option::Some(ninforc.clone());
                 self.tree.insert(node, ninforc);
-        } else { 
-            let ninfo = NodeInfo{nodeid: node.clone(), 
-                prev: self.tail.clone(), next: Option::None, location: loc}; 
+        } else {
+            let ninfo = NodeInfo{nodeid: node.clone(),
+                prev: self.tail.clone(), next: Option::None, location: loc};
             let ninforc = Rc::new(RefCell::new(ninfo));
             let oldref = self.tail.clone();
             self.tail = Option::Some(ninforc.clone());
-            match oldref 
+            match oldref
             {
                 Some(rc) => { let mut ni = rc.borrow_mut(); ni.next = Option::Some(ninforc.clone()); }
                 None => panic!("Could not insert {:?}", node)
@@ -97,7 +97,7 @@ impl KBucket {
         }
         {
             let ref mut me_opt = self.tree.get(&node);
-            self.head = Option::Some(me_opt.unwrap().clone()); 
+            self.head = Option::Some(me_opt.unwrap().clone());
         }
     }
 
@@ -118,7 +118,7 @@ impl KBucket {
 
     pub fn sighting(&mut self, node: NodeId, loc: String) {
         let found = self.tree.contains_key(&node);
-        if found { 
+        if found {
             self.move_to_top(node); }
         else { self.kbinsert(node, loc);}
     }
