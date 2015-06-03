@@ -1,5 +1,3 @@
-#![allow(dead_code)] 
-
 pub fn parse_hex_bytes(bytes: &[u8]) -> Option<usize> {
     let mut result: usize = 0;
     for &b in bytes.iter() {
@@ -19,5 +17,7 @@ mod tests {
     #[test]
     fn test_parse_hex_bytes() {
         assert_eq!(Some(164), parse_hex_bytes("a4".as_bytes()));
+        assert_eq!(Some(912559), parse_hex_bytes("decaf".as_bytes()));
+        assert_eq!(None, parse_hex_bytes("fudge".as_bytes()));
     }
 }

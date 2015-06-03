@@ -5,7 +5,7 @@ mod util;
 use kbucket::KBucket;
 use nodeid::NodeId;
 
-fn main (){
+pub fn main (){
         let node0 = NodeId::from_hexdigest("316b370b13056e7358bb33aa85a114471832b295dcc5888b6785697bcf080000").unwrap();
         let node1 = NodeId::from_hexdigest("316b370b13056e7358bb33aa85a114471832b295dcc5888b6785697bcf080001").unwrap();
         let node2 = NodeId::from_hexdigest("316b370b13056e7358bb33aa85a114471832b295dcc5888b6785697bcf080002").unwrap();

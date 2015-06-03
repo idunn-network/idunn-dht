@@ -10,6 +10,9 @@ const NODE_ID_SIZE: usize = 32;
 #[derive(Clone, Copy, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub struct NodeId([u8; NODE_ID_SIZE]);
 
+unsafe impl Sync for NodeId {}
+unsafe impl Send for NodeId {}
+
 impl NodeId {
     pub fn from_hexdigest(hex: &str) -> Option<NodeId> {
         if hex.len() != 2 * NODE_ID_SIZE { return None; }
