@@ -3,26 +3,30 @@
 ## Plan
 
 - DHT for discovery *only*
-- Nodes are identities
-- Multiple locations per node
+    - So really a DRT (distributed routing table)
+- Nodes are devices
+    - Device keys are signed by identity keys
+- Single location per node
 - No data entries in DHT – only nodes
-- TODO: cryptographic protocol for peer joining:
-    - Support verification
-    - Signing subkeys
-    - Revocation of subkeys
+- TODO: cryptographic protocol for peer joining
 
 ## Design notes
 
 - Routing table, per bit:
     - Primary contact bucket
-    - “Replacement cache” of all nodes
-- Collections are multimaps
-    - Node IDs to 1+ contacts/locations
-- One message for DHT: `Lookup(node)`
+    - Agreed no “replacement cache”
+    – Mark failed nodes as stale; replace with new when seen
+- One message/response for DRT
+    - Message: `Lookup(node)`
+    - No need for `PING`: just mark failing nodes as “stale” and replace with
+      new when observed.
+    - No need for DHT data-related messages
 - On receipt of `Lookup(node)`:
     - Build and reply with set of `k` nodes
-      - If we have `node` in replacement cache, include it
-      - Fill remaining entries with closest nodes routing table
+        - Fill initially from associated bucket
+        - If fewer than `k` in bucket:
+            - Fill first from higher buckets
+            - Then fill from lower
 - To perform a node lookup for `node`:
     1. From routing table, build set of `k` closest nodes
     2. Send `Lookup(node)` messages to the `α` closest we have not yet queried.
